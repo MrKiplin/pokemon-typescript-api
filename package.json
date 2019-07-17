@@ -1,0 +1,21 @@
+{
+  "name": "pokemon-service-api",
+  "version": "1.0.0",
+  "description": "Service for connecting to the Pokemon REST API.",
+  "main": "index.ts",
+  "repository": "https://github.com/MrKiplin/pokemon-service-api.git",
+  "author": "MrKiplin <tjworks@hotmail.co.uk>",
+  "license": "MIT",
+  "scripts": {
+    "start": "ts-node-dev index.ts"
+  },
+  "devDependencies": {
+    "@types/jest": "^24.0.15",
+    "jest": "^24.8.0",
+    "prettier": "^1.18.2",
+    "ts-jest": "^24.0.2",
+    "tslint": "^5.18.0",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^3.5.3"
+  }
+}

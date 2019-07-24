@@ -7,7 +7,12 @@
   "author": "MrKiplin <tjworks@hotmail.co.uk>",
   "license": "MIT",
   "scripts": {
-    "start": "ts-node-dev index.ts"
+    "start": "ts-node-dev index.ts",
+    "test": "TZ=UTC jest src --runInBand",
+    "test:coverage": "yarn test --coverage",
+    "lint-prettier": "prettier --list-different {src,test}/**/*.ts",
+    "lint-tslint": "tslint --config tslint.json '{src,test}/**/*.ts'",
+    "lint": "yarn lint-prettier && yarn lint-tslint"
   },
   "devDependencies": {
     "@types/jest": "^24.0.15",

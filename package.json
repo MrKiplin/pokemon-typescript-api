@@ -4,10 +4,10 @@
   "description": "Service for connecting to the Pokemon REST API.",
   "main": "index.ts",
   "repository": "https://github.com/MrKiplin/pokemon-service-api.git",
-  "author": "MrKiplin <tjworks@hotmail.co.uk>",
+  "author": "MrKiplin <https://github.com/MrKiplin>",
   "license": "MIT",
   "scripts": {
-    "start": "ts-node-dev index.ts",
+    "start": "ts-node-dev src/index.ts",
     "test": "TZ=UTC jest src --runInBand",
     "test:coverage": "yarn test --coverage",
     "lint-prettier": "prettier --list-different {src,test}/**/*.ts",
@@ -28,7 +28,8 @@
   },
   "dependencies": {
     "@ovotech/typesafe-get": "^2.0.1",
-    "axios": "^0.19.0"
+    "axios": "^0.19.0",
+    "express": "^4.17.1"
   },
   "jest": {
     "transform": {

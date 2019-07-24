@@ -1,0 +1,103 @@
+openapi: 3.0.2
+info:
+  description: "A service for getting basic pokemon info"
+  version: "0.1.0"
+  title: "Pokemon Info API"
+  contact:
+    email: "tjworks@hotmail.co.uk"
+
+servers:
+  - url: https://pokeapi.co/api/v2/
+    description: Production Server
+
+paths:
+  /.well-known/health-check:
+    get:
+      summary: Check if the service is up and running.
+      responses:
+        200:
+          description: Application is running.
+          examples:
+            application/json: { "healthy": true }
+
+  /.well-known/swagger.yaml:
+    get:
+      summary: Returns the service OpenAPI definition.
+      responses:
+        200:
+          description: Service OpenAPI definition.
+
+  /v1/pokemon/{pokemonNameOrId}/:
+    get:
+      summary: Submit a request to get info for a given pokemon.
+      parameters:
+        - name: pokemonNameOrID
+          in: path
+          description: Unique identifier for the pokemon.
+          required: true
+          schema:
+            oneOf:
+              - type: string
+              - type: integer
+      responses:
+        200:
+          $ref: "#/components/responses/GetPokemonInfoSuccess"
+        400:
+          $ref: "#/components/responses/BadRequest"
+        404:
+          $ref: "#/components/responses/PokemonNotFound"
+        500:
+          $ref: "#/components/responses/ServerError"
+
+components:
+  responses:
+    GetPokemonInfoSuccess:
+      description: Pokemon information successfully received.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/GetPokemonInfoSuccess"
+    BadRequest:
+      description: Bad request - user input error.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/HttpErrorResponse"
+    PokemonNotFound:
+      description: Pokemon not found.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/HttpErrorResponse"
+    ServerError:
+      description: Server Error.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/HttpErrorResponse"
+
+  schemas:
+    GetPokemonInfoSuccess:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        types:
+          type: array
+          items:
+            type: string
+    HttpErrorResponse:
+      type: object
+      properties:
+        code:
+          description: An error code.
+          type: integer
+          format: int32
+          minimum: 1
+        message:
+          description: Information about the error.
+          type: string
+      required:
+        - message

@@ -19,7 +19,12 @@ export const getPokemon = async (req, res, next): Promise<Pokemon> => {
   }
 };
 
-export const errorMiddleware = (error, req, res, next) => {
+export const errorMiddleware = (
+  error,
+  req,
+  res,
+  next
+): express.ErrorRequestHandler => {
   const pokemonNameOrId = req.params.pokemonNameOrId;
 
   if (res.headersSent) {

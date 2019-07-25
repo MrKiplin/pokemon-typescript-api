@@ -1,10 +1,15 @@
 import axios from "axios";
+import bodyParser = require("body-parser");
 import * as express from "express";
 import { PokemonNotFound } from "./pokemon-service/error.pokemon-not-found";
 import { Pokemon } from "./pokemon-service/pokemon";
 import { PokemonService } from "./pokemon-service/pokemon-service";
 
-export const getPokemon = async (req, res, next): Promise<Pokemon> => {
+export const getPokemon = async (
+  req: any,
+  res: any,
+  next: any
+): Promise<Pokemon> => {
   const pokemonNameOrId = req.params.pokemonNameOrId;
   const pokemonService = new PokemonService(
     axios.create({ baseURL: "https://pokeapi.co/api/v2" })
@@ -19,12 +24,7 @@ export const getPokemon = async (req, res, next): Promise<Pokemon> => {
   }
 };
 
-export const errorMiddleware = (
-  error,
-  req,
-  res,
-  next
-): express.ErrorRequestHandler => {
+export const errorMiddleware = (error: any, req: any, res: any, next: any) => {
   const pokemonNameOrId = req.params.pokemonNameOrId;
 
   if (res.headersSent) {
@@ -46,10 +46,12 @@ export const errorMiddleware = (
 
 export const createRestApp = () => {
   const app = express();
-  app.use(express.json());
+  app.use(bodyParser.json({ type: "*/*" }));
 
-  app.get("/.well-known/health-check", res => res.json({ healthy: true }));
-  app.get("/.well-known/swagger.yaml", res =>
+  app.get("/.well-known/health-check", (req, res) =>
+    res.json({ healthy: true })
+  );
+  app.get("/.well-known/swagger.yaml", (req, res) =>
     res.sendFile("./swagger.yaml", { root: __dirname })
   );
   app.get("/api/pokemon/:pokemonNameOrId", getPokemon, errorMiddleware);

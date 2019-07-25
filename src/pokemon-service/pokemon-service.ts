@@ -11,7 +11,7 @@ export interface PokemonType {
 export interface PokemonApiResponse {
   id: number;
   name: string;
-  types: PokemonType;
+  types: PokemonType[];
 }
 
 export class PokemonService {
@@ -26,7 +26,7 @@ export class PokemonService {
       pokemon = response.data;
       const pokemonTypes: PokemonType[] = pokemon.types;
 
-      const formattedPokemonTypes = pokemonTypes.map(
+      const formattedPokemonTypes: string[] = pokemonTypes.map(
         pokemonType => pokemonType.type.name
       );
 

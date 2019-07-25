@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "noUnusedLocals": true,
+    "skipLibCheck": true,
+    "jsx": "react",
+    "strict": true,
+    "module": "commonjs",
+    "target": "es2018",
+    "sourceMap": false,
+    "outDir": "dist",
+    "resolveJsonModule": true,
+    "lib": ["es2015", "es2018", "esnext.asynciterable", "dom"]
+  },
+  "include": ["src", "test"],
+  "exclude": ["node_modules", "dist"]
+}

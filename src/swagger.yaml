@@ -1,7 +1,7 @@
 openapi: 3.0.2
 info:
-  description: "A service for getting basic pokemon info"
-  version: "0.1.0"
+  description: "Service for connecting to the pokemon REST API"
+  version: "1.0.0"
   title: "Pokemon Info API"
   contact:
     email: "tjworks@hotmail.co.uk"

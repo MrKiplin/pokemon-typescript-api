@@ -1,9 +1,13 @@
 import axios from "axios";
 import bodyParser = require("body-parser");
 import * as express from "express";
+import * as swaggerUi from "swagger-ui-express";
+import * as YAML from "yamljs";
 import { PokemonNotFound } from "./pokemon-service/error.pokemon-not-found";
 import { Pokemon } from "./pokemon-service/pokemon";
 import { PokemonService } from "./pokemon-service/pokemon-service";
+
+const swaggerDocument = YAML.load("./swagger.yaml");
 
 export const getPokemon = async (
   req: any,
@@ -47,6 +51,7 @@ export const errorMiddleware = (error: any, req: any, res: any, next: any) => {
 export const createRestApp = () => {
   const app = express();
   app.use(bodyParser.json({ type: "*/*" }));
+  app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
   app.get("/.well-known/health-check", (req, res) =>
     res.json({ healthy: true })

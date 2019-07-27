@@ -53,7 +53,7 @@ Open `http://localhost:<port>/api-docs` in your browser to view the swagger docu
 
 ### PORT:
 
-Port is set by environmental variable `PORT`. If none exist then will default to `3000`.
+Port is set by environmental variable `PORT`. If none exists then will default to `3000`.
 
 ## Authors
 

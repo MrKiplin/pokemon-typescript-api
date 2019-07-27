@@ -51,7 +51,7 @@ yarn start
 
 Open `http://localhost:<port>/api-docs` in your browser to view the swagger documentation.
 
-### PORT:
+### Port:
 
 Port is set by environmental variable `PORT`. If none exists then will default to `3000`.
 

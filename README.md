@@ -49,6 +49,8 @@ Change to the root directory and run `yarn start`
 yarn start
 ```
 
+### Authentication
+
 Open `http://localhost:<port>/api-docs` in your browser to view the swagger documentation.
 
 ### Port:

@@ -1,0 +1,164 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "version": "1.0.0",
+    "title": "Pokemon Service API",
+    "description": "Service for connecting to the Pokemon REST API.",
+    "license": {
+      "name": "MIT"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000/",
+      "description": "Default Local Server"
+    }
+  ],
+  "paths": {
+    "/.well-known/health-check": {
+      "get": {
+        "summary": "Check if the service is up and running.",
+        "tags": ["Well-known"],
+        "responses": {
+          "200": {
+            "description": "Application is running.",
+            "examples": {
+              "application/json": {
+                "healthy": true
+              }
+            }
+          }
+        }
+      }
+    },
+    "/.well-known/swagger.yaml": {
+      "get": {
+        "summary": "Returns the service OpenAPI definition.",
+        "tags": ["Well-known"],
+        "responses": {
+          "200": {
+            "description": "Service OpenAPI definition."
+          }
+        }
+      }
+    },
+    "/api/pokemon/{pokemonNameOrId}/": {
+      "get": {
+        "summary": "Info for a specific pokemon.",
+        "operationId": "getPokemon",
+        "tags": ["Pokedex"],
+        "parameters": [
+          {
+            "name": "pokemonNameOrId",
+            "in": "path",
+            "description": "The name or id of the pokemon to retrieve.",
+            "required": true,
+            "schema": {
+              "oneOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/GetPokemonInfoSuccess"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/components/responses/PokemonNotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "responses": {
+      "GetPokemonInfoSuccess": {
+        "description": "Pokemon information successfully received.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/GetPokemonInfoSuccess"
+            }
+          }
+        }
+      },
+      "BadRequest": {
+        "description": "Bad request - user input error.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/HttpErrorResponse"
+            }
+          }
+        }
+      },
+      "PokemonNotFound": {
+        "description": "Pokemon not found.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/HttpErrorResponse"
+            }
+          }
+        }
+      },
+      "ServerError": {
+        "description": "Server Error.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/HttpErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "schemas": {
+      "GetPokemonInfoSuccess": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "types": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "HttpErrorResponse": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "An error code.",
+            "type": "integer",
+            "format": "int32",
+            "minimum": 1
+          },
+          "message": {
+            "description": "Information about the error.",
+            "type": "string"
+          }
+        },
+        "required": ["message"]
+      }
+    }
+  }
+}

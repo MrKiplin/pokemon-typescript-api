@@ -1,19 +1,20 @@
-openapi: 3.0.2
+openapi: "3.0.2"
 info:
-  description: "Service for connecting to the pokemon REST API"
-  version: "1.0.0"
-  title: "Pokemon Info API"
-  contact:
-    email: "tjworks@hotmail.co.uk"
-
+  version: 1.0.0
+  title: Pokemon Service API
+  description: "Service for connecting to the Pokemon REST API."
+  license:
+    name: MIT
 servers:
-  - url: https://pokeapi.co/api/v2/
-    description: Production Server
+  - url: http://localhost:3000/
+    description: Default Local Server
 
 paths:
   /.well-known/health-check:
     get:
       summary: Check if the service is up and running.
+      tags:
+        - Well-known
       responses:
         200:
           description: Application is running.
@@ -23,17 +24,22 @@ paths:
   /.well-known/swagger.yaml:
     get:
       summary: Returns the service OpenAPI definition.
+      tags:
+        - Well-known
       responses:
         200:
           description: Service OpenAPI definition.
 
-  /v1/pokemon/{pokemonNameOrId}/:
+  /api/pokemon/{pokemonNameOrId}/:
     get:
-      summary: Submit a request to get info for a given pokemon.
+      summary: Info for a specific pokemon.
+      operationId: getPokemon
+      tags:
+        - Pokedex
       parameters:
-        - name: pokemonNameOrID
+        - name: pokemonNameOrId
           in: path
-          description: Unique identifier for the pokemon.
+          description: The name or id of the pokemon to retrieve.
           required: true
           schema:
             oneOf:

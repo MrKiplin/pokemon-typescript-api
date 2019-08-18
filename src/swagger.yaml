@@ -10,22 +10,22 @@ servers:
     description: Default Local Server
 
 paths:
-  /.well-known/health-check:
+  /internal/health-check:
     get:
       summary: Check if the service is up and running.
       tags:
-        - Well-known
+        - Internal
       responses:
         200:
           description: Application is running.
           examples:
             application/json: { "healthy": true }
 
-  /.well-known/swagger.yaml:
+  /internal/swagger.yaml:
     get:
       summary: Returns the service OpenAPI definition.
       tags:
-        - Well-known
+        - Internal
       responses:
         200:
           description: Service OpenAPI definition.
@@ -35,7 +35,7 @@ paths:
       summary: Info for a specific pokemon.
       operationId: getPokemon
       tags:
-        - Pokedex
+        - Pokemon
       parameters:
         - name: pokemonNameOrId
           in: path

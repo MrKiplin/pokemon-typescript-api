@@ -49,7 +49,7 @@ Change to the root directory and run `yarn start`
 yarn start
 ```
 
-Open `http://localhost:<port>/api-docs` in your browser to view the swagger documentation.
+Open `http://localhost:<port>/internal/api-docs` in your browser to view the swagger documentation. NOTE: `swagger.yaml` base URL will need to be updated if `PORT` differs from default i.e 3000.
 
 ### Port:
 

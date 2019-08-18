@@ -7,9 +7,8 @@
   "author": "MrKiplin <https://github.com/MrKiplin>",
   "license": "MIT",
   "scripts": {
-    "start": "ts-node-dev src/index.ts",
+    "start": "ts-node src/index.ts",
     "test": "TZ=UTC jest src --runInBand",
-    "test:coverage": "yarn test --coverage",
     "lint-prettier": "prettier --list-different {src,test}/**/*.ts",
     "lint-tslint": "tslint --config tslint.json '{src,test}/**/*.ts'",
     "lint": "yarn lint-prettier && yarn lint-tslint"

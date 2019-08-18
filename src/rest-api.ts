@@ -50,12 +50,14 @@ export const errorMiddleware = (error: any, req: any, res: any, next: any) => {
 export const createRestApp = () => {
   const app = express();
   app.use(bodyParser.json({ type: "*/*" }));
-  app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-
-  app.get("/.well-known/health-check", (req, res) =>
-    res.json({ healthy: true })
+  app.use(
+    "/internal/api-docs",
+    swaggerUi.serve,
+    swaggerUi.setup(swaggerDocument)
   );
-  app.get("/.well-known/swagger.yaml", (req, res) =>
+
+  app.get("/internal/health-check", (req, res) => res.json({ healthy: true }));
+  app.get("/internal/swagger.yaml", (req, res) =>
     res.sendFile("./swagger.yaml", { root: __dirname })
   );
   app.get("/api/pokemon/:pokemonNameOrId", getPokemon, errorMiddleware);

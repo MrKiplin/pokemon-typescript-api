@@ -1,12 +1,13 @@
 import axios from "axios";
 import bodyParser = require("body-parser");
 import * as express from "express";
+import { join } from "path";
 import * as swaggerUi from "swagger-ui-express";
 import * as YAML from "yamljs";
 import { PokemonNotFound } from "./pokemon-service/error.pokemon-not-found";
 import { Pokemon } from "./pokemon-service/pokemon";
 import { PokemonService } from "./pokemon-service/pokemon-service";
-const swaggerDocument = YAML.load("./swagger.yaml");
+const swaggerDocument = YAML.load(join(__dirname, "swagger.yaml"));
 
 export const getPokemon = async (
   req: any,
@@ -27,7 +28,13 @@ export const getPokemon = async (
   }
 };
 
-export const errorMiddleware = (error: any, req: any, res: any, next: any) => {
+export const errorMiddleware = (
+  // TODO: Add express types i.e Request, Response, NextFunction
+  error: Error,
+  req: any,
+  res: any,
+  next: any
+): express.RequestHandler => {
   const pokemonNameOrId = req.params.pokemonNameOrId;
 
   if (res.headersSent) {
@@ -44,7 +51,7 @@ export const errorMiddleware = (error: any, req: any, res: any, next: any) => {
     code: 500,
     message: "Internal error"
   });
-  next(error);
+  return next(error);
 };
 
 export const createRestApp = () => {

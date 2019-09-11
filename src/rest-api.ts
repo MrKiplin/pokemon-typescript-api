@@ -1,19 +1,19 @@
 import axios from "axios";
 import bodyParser = require("body-parser");
 import * as express from "express";
+import { NextFunction, Request, RequestHandler, Response } from "express";
 import { join } from "path";
 import * as swaggerUi from "swagger-ui-express";
 import * as YAML from "yamljs";
 import { PokemonNotFound } from "./pokemon-service/error.pokemon-not-found";
-import { Pokemon } from "./pokemon-service/pokemon";
 import { PokemonService } from "./pokemon-service/pokemon-service";
 const swaggerDocument = YAML.load(join(__dirname, "swagger.yaml"));
 
 export const getPokemon = async (
-  req: any,
-  res: any,
-  next: any
-): Promise<Pokemon> => {
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
   const pokemonNameOrId = req.params.pokemonNameOrId;
   const pokemonService = new PokemonService(
     axios.create({ baseURL: "https://pokeapi.co/api/v2" })
@@ -34,7 +34,7 @@ export const errorMiddleware = (
   req: any,
   res: any,
   next: any
-): express.RequestHandler => {
+): RequestHandler => {
   const pokemonNameOrId = req.params.pokemonNameOrId;
 
   if (res.headersSent) {

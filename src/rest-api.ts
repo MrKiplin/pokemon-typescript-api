@@ -1,51 +1,12 @@
-import axios from "axios";
 import bodyParser = require("body-parser");
 import * as express from "express";
+import { join } from "path";
 import * as swaggerUi from "swagger-ui-express";
 import * as YAML from "yamljs";
-import { PokemonNotFound } from "./pokemon-service/error.pokemon-not-found";
-import { Pokemon } from "./pokemon-service/pokemon";
-import { PokemonService } from "./pokemon-service/pokemon-service";
-const swaggerDocument = YAML.load("./swagger.yaml");
-
-export const getPokemon = async (
-  req: any,
-  res: any,
-  next: any
-): Promise<Pokemon> => {
-  const pokemonNameOrId = req.params.pokemonNameOrId;
-  const pokemonService = new PokemonService(
-    axios.create({ baseURL: "https://pokeapi.co/api/v2" })
-  );
-
-  try {
-    const pokemonInfo = await pokemonService.getPokemonInfo(pokemonNameOrId);
-    res.status(200).json({ pokemonInfo });
-    return next();
-  } catch (error) {
-    return next(error);
-  }
-};
-
-export const errorMiddleware = (error: any, req: any, res: any, next: any) => {
-  const pokemonNameOrId = req.params.pokemonNameOrId;
-
-  if (res.headersSent) {
-    return next(error);
-  }
-  if (error instanceof PokemonNotFound) {
-    res.status(404).json({
-      code: 404,
-      message: `Error retrieving pokemon details for: ${pokemonNameOrId}`
-    });
-    return next(error);
-  }
-  res.status(500).json({
-    code: 500,
-    message: "Internal error"
-  });
-  next(error);
-};
+import { getPokemonRoute } from "./routes/get-pokemon";
+import { internalHealthCheck } from "./routes/internal-health-check";
+import { internalSwagger } from "./routes/internal-swagger";
+const swaggerDocument = YAML.load(join(__dirname, "swagger.yaml"));
 
 export const createRestApp = () => {
   const app = express();
@@ -55,12 +16,9 @@ export const createRestApp = () => {
     swaggerUi.serve,
     swaggerUi.setup(swaggerDocument)
   );
-
-  app.get("/internal/health-check", (req, res) => res.json({ healthy: true }));
-  app.get("/internal/swagger.yaml", (req, res) =>
-    res.sendFile("./swagger.yaml", { root: __dirname })
-  );
-  app.get("/api/pokemon/:pokemonNameOrId", getPokemon, errorMiddleware);
+  app.use("/internal/", internalHealthCheck());
+  app.use("/internal/swagger.yaml", internalSwagger());
+  app.use("/api/pokemon/", getPokemonRoute());
 
   const port = process.env.PORT || 3000;
   // tslint:disable-next-line: no-console

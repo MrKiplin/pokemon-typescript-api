@@ -8,7 +8,7 @@ import { internalHealthCheck } from "./routes/internal-health-check";
 import { internalSwagger } from "./routes/internal-swagger";
 const swaggerDocument = YAML.load(join(__dirname, "swagger.yaml"));
 
-export const createRestApp = () => {
+export const createRestApp = async () => {
   const app = express();
   app.use(bodyParser.json({ type: "*/*" }));
   app.use(
@@ -20,7 +20,5 @@ export const createRestApp = () => {
   app.use("/internal/swagger.yaml", internalSwagger());
   app.use("/api/pokemon/", getPokemonRoute());
 
-  const port = process.env.PORT || 3000;
-  // tslint:disable-next-line: no-console
-  app.listen(port, () => console.log(`Listening on port ${port}...`));
+  return app;
 };

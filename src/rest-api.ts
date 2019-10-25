@@ -1,11 +1,11 @@
 import axios from "axios";
 import bodyParser = require("body-parser");
 import * as express from "express";
-import { NextFunction, Request, RequestHandler, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { join } from "path";
 import * as swaggerUi from "swagger-ui-express";
 import * as YAML from "yamljs";
-import { PokemonNotFound } from "./pokemon-service/error.pokemon-not-found";
+import { getPokemonErrorMiddleware } from "./middleware/get-pokemon-error-middleware";
 import { PokemonService } from "./pokemon-service/pokemon-service";
 const swaggerDocument = YAML.load(join(__dirname, "swagger.yaml"));
 
@@ -28,32 +28,6 @@ export const getPokemon = async (
   }
 };
 
-export const errorMiddleware = (
-  // TODO: Add express types i.e Request, Response, NextFunction
-  error: Error,
-  req: any,
-  res: any,
-  next: any
-): RequestHandler => {
-  const pokemonNameOrId = req.params.pokemonNameOrId;
-
-  if (res.headersSent) {
-    return next(error);
-  }
-  if (error instanceof PokemonNotFound) {
-    res.status(404).json({
-      code: 404,
-      message: `Error retrieving pokemon details for: ${pokemonNameOrId}`
-    });
-    return next(error);
-  }
-  res.status(500).json({
-    code: 500,
-    message: "Internal error"
-  });
-  return next(error);
-};
-
 export const createRestApp = () => {
   const app = express();
   app.use(bodyParser.json({ type: "*/*" }));
@@ -67,7 +41,8 @@ export const createRestApp = () => {
   app.get("/internal/swagger.yaml", (req, res) =>
     res.sendFile("./swagger.yaml", { root: __dirname })
   );
-  app.get("/api/pokemon/:pokemonNameOrId", getPokemon, errorMiddleware);
+  app.use(getPokemonErrorMiddleware);
+  app.get("/api/pokemon/:pokemonNameOrId", getPokemon);
 
   const port = process.env.PORT || 3000;
   // tslint:disable-next-line: no-console

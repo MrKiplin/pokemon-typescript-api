@@ -8,6 +8,7 @@ import * as YAML from "yamljs";
 import { getPokemonErrorMiddleware } from "./middleware/get-pokemon-error-middleware";
 import { PokemonService } from "./pokemon-service/pokemon-service";
 import { internalHealthCheck } from "./routes/internal-health-check";
+import { internalSwagger } from "./routes/internal-swagger";
 const swaggerDocument = YAML.load(join(__dirname, "swagger.yaml"));
 
 export const getPokemon = async (
@@ -37,11 +38,9 @@ export const createRestApp = () => {
     swaggerUi.serve,
     swaggerUi.setup(swaggerDocument)
   );
-
   app.use("/internal/health-check", internalHealthCheck());
-  app.get("/internal/swagger.yaml", (req, res) =>
-    res.sendFile("./swagger.yaml", { root: __dirname })
-  );
+  app.use("/internal/swagger.yaml", internalSwagger());
+
   app.use(getPokemonErrorMiddleware);
   app.get("/api/pokemon/:pokemonNameOrId", getPokemon);
 

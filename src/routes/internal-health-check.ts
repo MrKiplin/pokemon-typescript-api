@@ -1,8 +1,10 @@
 import * as express from "express";
 
-export const internalHealthCheck = () => {
-  const router = express.Router();
+// export const internalHealthCheck = () => {
+export const internalHealthCheck = express.Router();
 
-  router.get("/health-check", (req, res) => res.json({ healthy: true }));
-  return router;
-};
+internalHealthCheck.get("/health-check", (req, res) =>
+  res.json({ healthy: true })
+);
+// return router;
+// };

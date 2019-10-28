@@ -16,7 +16,7 @@ export const createRestApp = async () => {
     swaggerUi.serve,
     swaggerUi.setup(swaggerDocument)
   );
-  app.use("/internal/", internalHealthCheck());
+  app.use("/internal/", internalHealthCheck);
   app.use("/internal/swagger.yaml", internalSwagger());
   app.use("/api/pokemon/", getPokemonRoute());
 

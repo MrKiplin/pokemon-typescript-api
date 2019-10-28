@@ -5,7 +5,7 @@ export const setupApplication = async () => {
   return app;
 };
 
-const port = process.env.PORT || 4000;
+const port = process.env.PORT || 3000;
 
 setupApplication().then(app =>
   // tslint:disable-next-line:no-console

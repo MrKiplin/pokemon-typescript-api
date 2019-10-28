@@ -23,10 +23,7 @@ export const getPokemon = async (
   }
 };
 
-export const getPokemonRoute = () => {
-  const router = express.Router();
+export const getPokemonRoute = express.Router();
 
-  router.use(getPokemonErrorMiddleware);
-  router.get("/:pokemonNameOrId", getPokemon);
-  return router;
-};
+getPokemonRoute.use(getPokemonErrorMiddleware);
+getPokemonRoute.get("/:pokemonNameOrId", getPokemon);

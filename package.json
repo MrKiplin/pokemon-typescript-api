@@ -8,6 +8,7 @@
   "license": "MIT",
   "scripts": {
     "start": "ts-node-dev src/index.ts",
+    "build": "tsc",
     "test": "TZ=UTC jest src --runInBand",
     "lint-prettier": "prettier --list-different {src,test}/**/*.ts",
     "lint-tslint": "tslint --config tslint.json '{src,test}/**/*.ts'",

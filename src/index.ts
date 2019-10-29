@@ -1,11 +1,11 @@
 import { createRestApp } from "./rest-api";
 
+const port = process.env.PORT || 3000;
+
 export const setupApplication = async () => {
-  const app = await createRestApp();
+  const app = createRestApp();
   return app;
 };
-
-const port = process.env.PORT || 3000;
 
 setupApplication().then(app =>
   // tslint:disable-next-line:no-console

@@ -1,15 +1,15 @@
 import * as request from "supertest";
-import { setupApplication } from "./index";
+import { createRestApp } from "./rest-api";
 
 describe("rest-api", () => {
   it("Should return true for health check", async () =>
-    request(await setupApplication())
+    request(await createRestApp())
       .get("/internal/health-check")
       .expect("Content-Type", /json/)
       .expect(200, { healthy: true }));
 
   it("Should get pokemon by id", async () =>
-    request(await setupApplication())
+    request(await createRestApp())
       .get("/api/pokemon/1/")
       .expect("Content-Type", /json/)
       .expect(200, {
@@ -17,7 +17,7 @@ describe("rest-api", () => {
       }));
 
   it("Should get pokemon by name", async () =>
-    request(await setupApplication())
+    request(await createRestApp())
       .get("/api/pokemon/bulbasaur/")
       .expect("Content-Type", /json/)
       .expect(200, {

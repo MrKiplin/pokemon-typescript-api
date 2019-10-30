@@ -22,8 +22,9 @@ jobs:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
-      - run: yarn build
 
+      # run TypeScript compiler
+      - run: yarn build
   unit-tests:
     docker:
       - image: circleci/node:8.10
@@ -46,4 +47,13 @@ jobs:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
+
+      # run tests
       - run: yarn test
+
+workflows:
+  version: 2
+  all_commits:
+    jobs:
+      - build
+      - unit-tests

@@ -1,5 +1,5 @@
 import { ErrorRequestHandler, Request, Response } from "express";
-import { PokemonNotFound } from "../pokemon-service/error.pokemon-not-found";
+import { PokemonNotFound } from "../../pokemon-service/error.pokemon-not-found";
 
 // TODO: Investigate why errors not trowing correctly on get-pokemon endpoint.
 export const getPokemonErrorMiddleware = (

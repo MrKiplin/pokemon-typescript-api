@@ -1,8 +1,8 @@
 import axios from "axios";
 import { NextFunction, Request, Response } from "express";
 import * as express from "express";
-import { getPokemonErrorMiddleware } from "../middleware/get-pokemon-error-middleware";
 import { PokemonService } from "../pokemon-service/pokemon-service";
+import { getPokemonErrorMiddleware } from "./middleware/get-pokemon-error-middleware";
 
 export const getPokemon = async (
   req: Request,

@@ -23,4 +23,14 @@ describe("rest-api", () => {
       .expect(200, {
         pokemonInfo: { id: 1, name: "bulbasaur", types: ["poison", "grass"] }
       }));
+
+  it("Should return status 404 if pokemonNameOrId is blank", async () =>
+    request(await createRestApp())
+      .get("/api/pokemon/")
+      .expect(404, {}));
+
+  it("Should return status 500 if pokemonNameOrId is invalid", async () =>
+    request(await createRestApp())
+      .get("/api/pokemon/invalid-pokemon")
+      .expect(500, {}));
 });

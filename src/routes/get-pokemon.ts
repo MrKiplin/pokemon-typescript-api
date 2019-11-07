@@ -25,5 +25,4 @@ export const getPokemon = async (
 
 export const getPokemonRoute = express.Router();
 
-getPokemonRoute.use(getPokemonErrorMiddleware);
-getPokemonRoute.get("/:pokemonNameOrId", getPokemon);
+getPokemonRoute.get("/:pokemonNameOrId", getPokemon, getPokemonErrorMiddleware);

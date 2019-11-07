@@ -23,4 +23,19 @@ describe("rest-api", () => {
       .expect(200, {
         pokemonInfo: { id: 1, name: "bulbasaur", types: ["poison", "grass"] }
       }));
+
+  it("Should return status 400 if pokemonNameOrId is blank", async () =>
+    request(await createRestApp())
+      .get("/api/pokemon/{pokemonNameOrId}")
+      .expect("Content-Type", /json/)
+      .expect(400, { code: 400, message: "No pokemon Name or ID provided" }));
+
+  it("Should return status 500 if pokemonNameOrId is invalid", async () =>
+    request(await createRestApp())
+      .get("/api/pokemon/invalid-pokemon")
+      .expect("Content-Type", /json/)
+      .expect(404, {
+        code: 404,
+        message: "Error retrieving pokemon details for: invalid-pokemon"
+      }));
 });

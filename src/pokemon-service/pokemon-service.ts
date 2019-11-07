@@ -1,7 +1,12 @@
 import { get } from "@ovotech/typesafe-get";
 import { AxiosInstance } from "axios";
 import { PokemonNotFound } from "./error.pokemon-not-found";
-import { Pokemon } from "./pokemon";
+
+export interface Pokemon {
+  id: number;
+  name: string;
+  types: string[];
+}
 
 export interface PokemonType {
   slot: number;

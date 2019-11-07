@@ -1,17 +1,23 @@
-import { ErrorRequestHandler, Request, Response } from "express";
-import { PokemonNotFound } from "../pokemon-service/error.pokemon-not-found";
+import { ErrorRequestHandler, NextFunction, Request, Response } from "express";
+import { PokemonNotFound } from "../../pokemon-service/error.pokemon-not-found";
 
-// TODO: Investigate why errors not trowing correctly on get-pokemon endpoint.
-export const getPokemonErrorMiddleware = (
+export const getPokemonErrorMiddleware: ErrorRequestHandler = (
   error: Error,
   req: Request,
   res: Response,
-  next: any
-): ErrorRequestHandler => {
+  next: NextFunction
+): void => {
   const pokemonNameOrId = req.params.pokemonNameOrId;
 
-  // TODO: If request is blank (i.e no pokemon id or name given) throw 400 NoDetailsGiven.
   if (res.headersSent) {
+    return next(error);
+  }
+
+  if (pokemonNameOrId === "{pokemonNameOrId}") {
+    res.status(400).json({
+      code: 400,
+      message: "No pokemon Name or ID provided"
+    });
     return next(error);
   }
   if (error instanceof PokemonNotFound) {

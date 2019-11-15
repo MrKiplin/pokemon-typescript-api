@@ -30,7 +30,7 @@ describe("rest-api", () => {
       .expect("Content-Type", /json/)
       .expect(400, { code: 400, message: "No pokemon Name or ID provided" }));
 
-  it("Should return status 500 if pokemonNameOrId is invalid", async () =>
+  it("Should return status 404 if pokemonNameOrId is invalid", async () =>
     request(await createRestApp())
       .get("/api/pokemon/invalid-pokemon")
       .expect("Content-Type", /json/)

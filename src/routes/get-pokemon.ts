@@ -1,10 +1,10 @@
 import axios from "axios";
-import { NextFunction, Request, Response } from "express";
+import { NextFunction, Request, RequestHandler, Response } from "express";
 import * as express from "express";
 import { PokemonService } from "../pokemon-service/pokemon-service";
 import { getPokemonErrorMiddleware } from "./middleware/get-pokemon-error-middleware";
 
-export const getPokemon = async (
+export const getPokemon: RequestHandler = async (
   req: Request,
   res: Response,
   next: NextFunction

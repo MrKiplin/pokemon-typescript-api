@@ -57,6 +57,6 @@ Port is set by environmental variable `PORT`. If none exists then will default t
 
 ## Authors
 
-![](mrkiplin-icon.gif)
+![](docs/mrkiplin-icon.gif)
 
 - **Theodore Jones** - [MrKiplin](https://github.com/MrKiplin)

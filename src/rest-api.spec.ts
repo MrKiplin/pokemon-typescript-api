@@ -13,7 +13,7 @@ describe("rest-api", () => {
       .get("/api/pokemon/1/")
       .expect("Content-Type", /json/)
       .expect(200, {
-        pokemonInfo: { id: 1, name: "bulbasaur", types: ["poison", "grass"] }
+        pokemonInfo: { id: 1, name: "bulbasaur", types: ["grass", "poison"] },
       }));
 
   it("Should get pokemon by name", async () =>
@@ -21,7 +21,7 @@ describe("rest-api", () => {
       .get("/api/pokemon/bulbasaur/")
       .expect("Content-Type", /json/)
       .expect(200, {
-        pokemonInfo: { id: 1, name: "bulbasaur", types: ["poison", "grass"] }
+        pokemonInfo: { id: 1, name: "bulbasaur", types: ["grass", "poison"] },
       }));
 
   it("Should return status 400 if pokemonNameOrId is blank", async () =>
@@ -36,6 +36,6 @@ describe("rest-api", () => {
       .expect("Content-Type", /json/)
       .expect(404, {
         code: 404,
-        message: "Error retrieving pokemon details for: invalid-pokemon"
+        message: "Error retrieving pokemon details for: invalid-pokemon",
       }));
 });

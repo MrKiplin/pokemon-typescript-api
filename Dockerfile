@@ -1,4 +1,4 @@
-FROM node:8-alpine
+FROM node:12.18.2-alpine
 WORKDIR /dist
 COPY package.json ./
 RUN yarn install --production

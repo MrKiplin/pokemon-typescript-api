@@ -23,12 +23,11 @@ export class PokemonService {
   constructor(private client: AxiosInstance) {}
 
   async getPokemonInfo(pokemonNameOrId: string | number): Promise<Pokemon> {
-    let pokemon;
     try {
       const response = await this.client.get<PokemonApiResponse>(
         `/pokemon/${pokemonNameOrId.toString().toLowerCase()}`
       );
-      pokemon = response.data;
+      const pokemon = response.data;
       const pokemonTypes: PokemonType[] = pokemon.types;
 
       const formattedPokemonTypes: string[] = pokemonTypes.map(

@@ -11,9 +11,10 @@
     "build": "tsc",
     "build-image": "docker build . -t pokemon-service-api",
     "test": "TZ=UTC jest src --runInBand",
-    "lint-prettier": "prettier --list-different {src,test}/**/*.ts",
-    "lint-tslint": "tslint --config tslint.json '{src,test}/**/*.ts'",
-    "lint": "yarn lint-prettier && yarn lint-tslint"
+    "lint:prettier": "prettier --list-different {src,test}/**/*.ts",
+    "lint:tslint": "tslint --config tslint.json '{src,test}/**/*.ts'",
+    "lint:openapi": "swagger-cli validate src/swagger.yaml",
+    "lint": "yarn lint:prettier && yarn lint:tslint && yarn lint:openapi"
   },
   "devDependencies": {
     "@types/body-parser": "^1.17.0",
@@ -27,6 +28,7 @@
     "nock": "^10.0.6",
     "prettier": "^1.18.2",
     "supertest": "^4.0.2",
+    "swagger-cli": "^4.0.4",
     "ts-jest": "^24.0.2",
     "ts-node-dev": "^1.0.0-pre.40",
     "tslint": "^5.18.0",

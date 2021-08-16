@@ -18,8 +18,6 @@ paths:
       responses:
         200:
           description: Application is running.
-          examples:
-            application/json: { "healthy": true }
 
   /internal/swagger.yaml:
     get:
